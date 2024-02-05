@@ -17,30 +17,30 @@ import jakarta.persistence.EntityNotFoundException;
 public class ClienteService {
 
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private ClienteRepository repository;
 
 	@Autowired
 	private FiltroService<Cliente, ClienteFiltros> filtroService;
 
 	public Page<ClienteInformacoes> listaClientes(Pageable paginacao, ClienteFiltros filtros) {
-		return clienteRepository.findAll(filtroService.adicicionaFiltros(filtros), paginacao)
+		return repository.findAll(filtroService.adicicionaFiltros(filtros), paginacao)
 				.map(ClienteInformacoes::new);
 	}
 
 	public ClienteInformacoes retornaClientePorId(Long id) {
-		return new ClienteInformacoes(clienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException()));
+		return new ClienteInformacoes(repository.findById(id).orElseThrow(() -> new EntityNotFoundException()));
 	}
 
 	public ClienteInformacoes cadastraCliente(ClienteCadastro dados) {
 		var cliente = new Cliente(dados);
 
-		clienteRepository.save(cliente);
+		repository.save(cliente);
 
 		return new ClienteInformacoes(cliente);
 	}
 
 	public ClienteInformacoes atualizaCliente(ClienteAtualizacao dados) {
-		var cliente = clienteRepository.findById(dados.id()).orElseThrow(() -> new EntityNotFoundException());
+		var cliente = repository.findById(dados.id()).orElseThrow(() -> new EntityNotFoundException());
 
 		cliente.atualizaCliente(dados);
 
@@ -48,6 +48,6 @@ public class ClienteService {
 	}
 
 	public void desativaCliente(Long id) {
-		clienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException()).desativaCliente();
+		repository.findById(id).orElseThrow(() -> new EntityNotFoundException()).desativaCliente();
 	}
 }
