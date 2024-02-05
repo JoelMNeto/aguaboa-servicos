@@ -10,34 +10,37 @@ import br.com.aguaboaservicos.cliente.model.ClienteAtualizacao;
 import br.com.aguaboaservicos.cliente.model.ClienteCadastro;
 import br.com.aguaboaservicos.cliente.model.ClienteFiltros;
 import br.com.aguaboaservicos.cliente.model.ClienteInformacoes;
+import br.com.aguaboaservicos.filtro.FiltroService;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ClienteService {
 
 	@Autowired
-	private ClienteRepository repository;
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private FiltroService<Cliente, ClienteFiltros> filtroService;
 
 	public Page<ClienteInformacoes> listaClientes(Pageable paginacao, ClienteFiltros filtros) {
-		return repository.findAllByAtivoTrue(paginacao).map(ClienteInformacoes::new);
-		
-		// CORRIGIR LÓGICA DE FILTRO, ADICIONAR @PATTERN NOS PARÂMETROS SEM VALIDAÇÃO
-		// ADICIONAR DEPENDÊNCIA DO SWEGGER
+		return clienteRepository.findAll(filtroService.adicicionaFiltros(filtros), paginacao)
+				.map(ClienteInformacoes::new);
 	}
 
 	public ClienteInformacoes retornaClientePorId(Long id) {
-		return new ClienteInformacoes(repository.findById(id).get());
+		return new ClienteInformacoes(clienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException()));
 	}
 
 	public ClienteInformacoes cadastraCliente(ClienteCadastro dados) {
 		var cliente = new Cliente(dados);
 
-		repository.save(cliente);
+		clienteRepository.save(cliente);
 
 		return new ClienteInformacoes(cliente);
 	}
 
 	public ClienteInformacoes atualizaCliente(ClienteAtualizacao dados) {
-		var cliente = repository.findById(dados.id()).get();
+		var cliente = clienteRepository.findById(dados.id()).orElseThrow(() -> new EntityNotFoundException());
 
 		cliente.atualizaCliente(dados);
 
@@ -45,6 +48,6 @@ public class ClienteService {
 	}
 
 	public void desativaCliente(Long id) {
-		repository.findById(id).get().desativaCliente();
+		clienteRepository.findById(id).orElseThrow(() -> new EntityNotFoundException()).desativaCliente();
 	}
 }

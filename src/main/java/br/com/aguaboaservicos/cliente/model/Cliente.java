@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import br.com.aguaboaservicos.cliente.model.endereco.Endereco;
+import br.com.aguaboaservicos.utils.StringUtils;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -31,12 +33,10 @@ public class Cliente {
 
 	private String nome;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Endereco endereco;
 
-	private String celular;
-
-	private String telefone;
+	private String contato;
 
 	@Column(name = "saldo_em_conta")
 	private BigDecimal saldoEmConta = BigDecimal.ZERO;
@@ -49,29 +49,25 @@ public class Cliente {
 	public Cliente(ClienteCadastro cliente) {
 		this.nome = cliente.nome();
 		this.endereco = new Endereco(cliente.endereco());
-		this.telefone = cliente.telefone();
 
-		if (cliente.celular() != null) {
-			this.celular = cliente.celular();
+		if (StringUtils.isOnlyNumbers(cliente.contato())) {			
+			this.contato = cliente.contato();
 		}
 	}
 
 	public void atualizaCliente(ClienteAtualizacao cliente) {
-		if (cliente.nome() != null) {
+		if (StringUtils.isNotEmpty(cliente.nome())) {
 			this.nome = cliente.nome();
 		}
 
-		if (cliente.telefone() != null) {
-			this.telefone = cliente.telefone();
-		}
-
-		if (cliente.celular() != null) {
-			this.celular = cliente.celular();
+		if (StringUtils.isNotEmpty(cliente.contato()) && StringUtils.isOnlyNumbers(cliente.contato())) {
+			this.contato = cliente.contato();
 		}
 
 		if (cliente.endereco() != null) {
-			this.endereco.atualizaEndereco(cliente.endereco());
+			this.getEndereco().atualizaEndereco(cliente.endereco());
 		}
+
 	}
 
 	public void desativaCliente() {

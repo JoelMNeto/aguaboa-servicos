@@ -13,7 +13,5 @@ public record ClienteCadastro(
 		@Valid
 		EnderecoBean endereco,
 		
-		@NotBlank(message = "Campo telefone é obrigatório!")
-		String telefone,
-		
-		String celular) {}
+		@NotBlank(message = "Campo contato é obrigatório!")
+		String contato) {}

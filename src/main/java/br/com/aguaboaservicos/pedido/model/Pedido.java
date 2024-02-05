@@ -7,6 +7,8 @@ import java.util.List;
 
 import br.com.aguaboaservicos.cliente.model.Cliente;
 import br.com.aguaboaservicos.pedido.enumerations.StatusEnum;
+import br.com.aguaboaservicos.pedido.enumerations.TipoPedidoEnum;
+import br.com.aguaboaservicos.pedido.itemPedido.ItemPedido;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,7 +39,12 @@ public class Pedido {
 	@Column(name = "valor_total")
 	private BigDecimal valorTotal;
 	
+	private BigDecimal frete = BigDecimal.ZERO;
+	
 	private StatusEnum status = StatusEnum.EM_ABERTO;
+	
+	@Column(name = "tipo_do_pedido")
+	private TipoPedidoEnum tipoDoPedido = TipoPedidoEnum.ENTREGA;
 	
 	@Column(name = "data_de_criacao")
 	private LocalDate dataDeCriacao = LocalDate.now();

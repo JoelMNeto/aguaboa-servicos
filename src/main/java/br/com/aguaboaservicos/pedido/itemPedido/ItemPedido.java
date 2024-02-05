@@ -1,7 +1,8 @@
-package br.com.aguaboaservicos.pedido.model;
+package br.com.aguaboaservicos.pedido.itemPedido;
 
 import java.math.BigDecimal;
 
+import br.com.aguaboaservicos.pedido.model.Pedido;
 import br.com.aguaboaservicos.produto.model.Produto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,11 +32,9 @@ public class ItemPedido {
 	@Column(name = "preco_unitario")
 	private BigDecimal precoUnitario;
 	
-	private Integer quantidade = 1;
-	
-	private BigDecimal frete = BigDecimal.ZERO;
-	
 	private BigDecimal desconto = BigDecimal.ZERO;
+	
+	private Integer quantidade = 1;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pedido pedido;

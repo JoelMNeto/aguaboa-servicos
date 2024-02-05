@@ -2,6 +2,7 @@ package br.com.aguaboaservicos.cliente.model.endereco;
 
 import java.time.LocalDateTime;
 
+import br.com.aguaboaservicos.utils.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,12 +30,14 @@ public class Endereco {
 
 	private String numero;
 
+	private String complemento;
+
 	private String bairro;
 
 	private String cep;
 
 	private String cidade = "Araraquara";
-	
+
 	@Column(name = "data_de_criacao")
 	private LocalDateTime dataDeCriacao = LocalDateTime.now();
 
@@ -42,38 +45,46 @@ public class Endereco {
 		this.logradouro = endereco.logradouro();
 		this.numero = endereco.numero();
 
-		if (endereco.bairro() != null) {
+		if (StringUtils.isNotEmpty(endereco.bairro())) {
 			this.bairro = endereco.bairro();
 		}
 
-		if (endereco.cep() != null) {
+		if (StringUtils.isNotEmpty(endereco.cep())) {
 			this.cep = endereco.cep();
 		}
 
-		if (endereco.cidade() != null) {
+		if (StringUtils.isNotEmpty(endereco.cidade())) {
 			this.cidade = endereco.cidade();
+		}
+
+		if (StringUtils.isNotEmpty(endereco.complemento())) {
+			this.complemento = endereco.complemento();
 		}
 	}
 
 	public void atualizaEndereco(EnderecoBean endereco) {
-		if (endereco.logradouro() != null) {
+		if (StringUtils.isNotEmpty(endereco.logradouro())) {
 			this.logradouro = endereco.logradouro();
 		}
 
-		if (endereco.numero() != null) {
+		if (StringUtils.isNotEmpty(endereco.numero())) {
 			this.numero = endereco.numero();
 		}
 
-		if (endereco.bairro() != null) {
+		if (StringUtils.isNotEmpty(endereco.bairro())) {
 			this.bairro = endereco.bairro();
 		}
 
-		if (endereco.cep() != null) {
+		if (StringUtils.isNotEmpty(endereco.cep())) {
 			this.cep = endereco.cep();
 		}
 
-		if (endereco.cidade() != null) {
+		if (StringUtils.isNotEmpty(endereco.cidade())) {
 			this.cidade = endereco.cidade();
+		}
+
+		if (StringUtils.isNotEmpty(endereco.complemento())) {
+			this.complemento = endereco.complemento();
 		}
 	}
 

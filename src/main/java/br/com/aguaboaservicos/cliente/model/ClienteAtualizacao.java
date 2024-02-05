@@ -11,6 +11,4 @@ public record ClienteAtualizacao(
 		
 		EnderecoBean endereco,
 		
-		String telefone,
-		
-		String celular) {}
+		String contato) {}

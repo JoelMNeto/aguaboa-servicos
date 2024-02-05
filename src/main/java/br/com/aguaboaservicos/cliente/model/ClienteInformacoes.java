@@ -4,21 +4,18 @@ import java.math.BigDecimal;
 
 import br.com.aguaboaservicos.cliente.model.endereco.EnderecoBean;
 
-public record ClienteInformacoes(
-		Long id,
+public record ClienteInformacoes(Long id,
 
 		String nome,
 
-		String telefone,
-
-		String celular,
+		String contato,
 
 		EnderecoBean endereco,
 
 		BigDecimal saldoEmConta) {
 
 	public ClienteInformacoes(Cliente cliente) {
-		this(cliente.getId(), cliente.getNome(), cliente.getTelefone(), cliente.getCelular(), new EnderecoBean(cliente.getEndereco()),
+		this(cliente.getId(), cliente.getNome(), cliente.getContato(), new EnderecoBean(cliente.getEndereco()),
 				cliente.getSaldoEmConta());
 	}
 
