@@ -1,4 +1,4 @@
-package br.com.aguaboaservicos.cliente.model.filtro;
+package br.com.aguaboaservicos.cliente.filtro;
 
 import org.springframework.stereotype.Component;
 

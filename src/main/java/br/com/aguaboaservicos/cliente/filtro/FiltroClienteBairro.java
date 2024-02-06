@@ -1,4 +1,4 @@
-package br.com.aguaboaservicos.cliente.model.filtro;
+package br.com.aguaboaservicos.cliente.filtro;
 
 import org.springframework.stereotype.Component;
 
@@ -12,13 +12,13 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 @Component
-public class FiltroClienteLogradouro implements Filtro<Cliente, ClienteFiltros> {
+public class FiltroClienteBairro implements Filtro<Cliente, ClienteFiltros> {
 
 	@Override
 	public Predicate adicionaFiltro(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder builder,
 			ClienteFiltros filtro) {
-		return StringUtils.isEmpty(filtro.logradouro()) ? builder.conjunction()
-				: builder.equal(root.get("endereco").get("logradouro"), filtro.logradouro());
+		return StringUtils.isEmpty(filtro.bairro()) ? builder.conjunction()
+				: builder.equal(root.get("endereco").get("bairro"), filtro.bairro());
 	}
 
 }
