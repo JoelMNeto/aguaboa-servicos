@@ -7,7 +7,7 @@ public class StringUtils {
 			return true;
 		}
 
-		return s.trim().length() == 0;
+		return s.trim().isEmpty();
 	}
 	
 	public static boolean isNotEmpty(String s) {
@@ -19,6 +19,6 @@ public class StringUtils {
 			return false;
 		}
 		
-		return s.matches("\\d+");
+		return s.matches("[1-9]+");
 	}
 }

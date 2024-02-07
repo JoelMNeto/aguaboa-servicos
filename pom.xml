@@ -13,7 +13,7 @@
 	<artifactId>aguaboa-servicos</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>aguaboa-servicos</name>
-	<description>Demo project for Spring Boot</description>
+	<description>API do projeto Aguaboa</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

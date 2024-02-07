@@ -3,6 +3,7 @@ package br.com.aguaboaservicos.produto.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import br.com.aguaboaservicos.utils.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,4 +37,31 @@ public class Produto {
 	
 	@Column(name = "data_de_criacao")
 	private LocalDate dataDeCriacao = LocalDate.now();
+	
+	public Produto(ProdutoCadastro dadosCadastro) {
+		this.nome = dadosCadastro.nome();
+		this.preco = dadosCadastro.preco();
+		
+		if (StringUtils.isNotEmpty(dadosCadastro.marca())) {
+			this.marca = dadosCadastro.marca();
+		}
+	}
+	
+	public void alteraProduto(ProdutoAlteracao dadosAlteracao) {
+		if (StringUtils.isNotEmpty(dadosAlteracao.nome())) {
+			this.nome = dadosAlteracao.nome();
+		}
+		
+		if (dadosAlteracao.preco() != null) {
+			this.preco = dadosAlteracao.preco();
+		}
+		
+		if (StringUtils.isNotEmpty(dadosAlteracao.marca())) {
+			this.marca = dadosAlteracao.marca();
+		}
+	}
+	
+	public void desativaProduto() {
+		this.ativo = false;
+	}
 }

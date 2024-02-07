@@ -11,6 +11,7 @@ import br.com.aguaboaservicos.cliente.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long>, JpaSpecificationExecutor<Cliente> {
 	
-	@EntityGraph(attributePaths = "endereco")
-    Page<Cliente> findAll(Specification<Cliente> specification, Pageable pageable);
+	@Override
+    @EntityGraph(attributePaths = "endereco")
+    Page<Cliente> findAll(Specification<Cliente> filtros, Pageable paginacao);
 }

@@ -18,7 +18,7 @@ public class FiltroClienteNome implements Filtro<Cliente, ClienteFiltros> {
 	public Predicate adicionaFiltro(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder builder,
 			ClienteFiltros filtro) {
 		return StringUtils.isEmpty(filtro.nome()) ? builder.conjunction()
-				: builder.like(root.get("nome"), "%" + filtro.nome() + "%");
+				: builder.like(builder.upper(root.get("nome")), "%" + filtro.nome().toUpperCase() + "%");
 	}
 
 }

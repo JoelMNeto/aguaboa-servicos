@@ -55,7 +55,7 @@ public class Cliente {
 		}
 	}
 
-	public void atualizaCliente(ClienteAtualizacao cliente) {
+	public void alteraCliente(ClienteAlteracao cliente) {
 		if (StringUtils.isNotEmpty(cliente.nome())) {
 			this.nome = cliente.nome();
 		}

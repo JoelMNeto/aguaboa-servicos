@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.aguaboaservicos.cliente.model.ClienteAtualizacao;
+import br.com.aguaboaservicos.cliente.model.ClienteAlteracao;
 import br.com.aguaboaservicos.cliente.model.ClienteCadastro;
 import br.com.aguaboaservicos.cliente.model.ClienteFiltros;
 import br.com.aguaboaservicos.cliente.model.ClienteInformacoes;
@@ -40,17 +40,17 @@ public class ClienteController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<ClienteInformacoes> retornaClientePorId(@PathVariable Long id) {
-		var cliente = service.retornaClientePorId(id);
+	public ResponseEntity<ClienteInformacoes> buscaClientePorId(@PathVariable Long id) {
+		var cliente = service.buscaClientePorId(id);
 
 		return ResponseEntity.ok(cliente);
 	}
 
 	@PostMapping
 	@Transactional
-	public ResponseEntity<ClienteInformacoes> cadastraCliente(@RequestBody @Valid ClienteCadastro dados,
+	public ResponseEntity<ClienteInformacoes> cadastraCliente(@RequestBody @Valid ClienteCadastro dadosCadastro,
 			UriComponentsBuilder uriBuilder) {
-		var cliente = service.cadastraCliente(dados);
+		var cliente = service.cadastraCliente(dadosCadastro);
 
 		var uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.id()).toUri();
 
@@ -59,8 +59,8 @@ public class ClienteController {
 
 	@PutMapping
 	@Transactional
-	public ResponseEntity<ClienteInformacoes> atualizaCliente(@RequestBody @Valid ClienteAtualizacao dados) {
-		var cliente = service.atualizaCliente(dados);
+	public ResponseEntity<ClienteInformacoes> alteraCliente(@RequestBody @Valid ClienteAlteracao dadosAlteracao) {
+		var cliente = service.alteraCliente(dadosAlteracao);
 
 		return ResponseEntity.ok(cliente);
 	}

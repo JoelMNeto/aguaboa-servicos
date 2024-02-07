@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.aguaboaservicos.cliente.model.Cliente;
-import br.com.aguaboaservicos.cliente.model.ClienteAtualizacao;
+import br.com.aguaboaservicos.cliente.model.ClienteAlteracao;
 import br.com.aguaboaservicos.cliente.model.ClienteCadastro;
 import br.com.aguaboaservicos.cliente.model.ClienteFiltros;
 import br.com.aguaboaservicos.cliente.model.ClienteInformacoes;
@@ -27,27 +27,27 @@ public class ClienteService {
 				.map(ClienteInformacoes::new);
 	}
 
-	public ClienteInformacoes retornaClientePorId(Long id) {
-		return new ClienteInformacoes(repository.findById(id).orElseThrow(() -> new EntityNotFoundException()));
+	public ClienteInformacoes buscaClientePorId(Long id) {
+		return new ClienteInformacoes(repository.findById(id).orElseThrow(EntityNotFoundException::new));
 	}
 
-	public ClienteInformacoes cadastraCliente(ClienteCadastro dados) {
-		var cliente = new Cliente(dados);
+	public ClienteInformacoes cadastraCliente(ClienteCadastro dadosCadastro) {
+		var cliente = new Cliente(dadosCadastro);
 
 		repository.save(cliente);
 
 		return new ClienteInformacoes(cliente);
 	}
 
-	public ClienteInformacoes atualizaCliente(ClienteAtualizacao dados) {
-		var cliente = repository.findById(dados.id()).orElseThrow(() -> new EntityNotFoundException());
+	public ClienteInformacoes alteraCliente(ClienteAlteracao dadosAlteracao) {
+		var cliente = repository.findById(dadosAlteracao.id()).orElseThrow(EntityNotFoundException::new);
 
-		cliente.atualizaCliente(dados);
+		cliente.alteraCliente(dadosAlteracao);
 
 		return new ClienteInformacoes(cliente);
 	}
 
 	public void desativaCliente(Long id) {
-		repository.findById(id).orElseThrow(() -> new EntityNotFoundException()).desativaCliente();
+		repository.findById(id).orElseThrow(EntityNotFoundException::new).desativaCliente();
 	}
 }
