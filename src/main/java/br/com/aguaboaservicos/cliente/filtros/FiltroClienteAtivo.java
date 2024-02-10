@@ -1,22 +1,19 @@
 package br.com.aguaboaservicos.cliente.filtros;
 
-import org.springframework.stereotype.Component;
-
 import br.com.aguaboaservicos.cliente.model.Cliente;
 import br.com.aguaboaservicos.cliente.model.ClienteFiltros;
-import br.com.aguaboaservicos.filtro.Filtro;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.stereotype.Component;
 
 @Component
-public class FiltroClienteAtivo implements Filtro<Cliente, ClienteFiltros> {
+public class FiltroClienteAtivo implements FiltroCliente {
 
-	@Override
-	public Predicate adicionaFiltro(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder builder,
-			ClienteFiltros filtro) {
-		return builder.equal(root.get("ativo"), builder.literal(true));
-	}
-
+    @Override
+    public Predicate adicionaFiltro(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder builder,
+                                    ClienteFiltros filtros) {
+        return builder.equal(root.get("ativo"), builder.literal(true));
+    }
 }
