@@ -1,4 +1,4 @@
-package br.com.aguaboaservicos.filtro;
+package br.com.aguaboaservicos.common.filtro;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;

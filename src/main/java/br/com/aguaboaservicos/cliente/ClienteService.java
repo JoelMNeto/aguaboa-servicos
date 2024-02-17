@@ -2,7 +2,7 @@ package br.com.aguaboaservicos.cliente;
 
 import br.com.aguaboaservicos.cliente.filtros.FiltroCliente;
 import br.com.aguaboaservicos.cliente.model.*;
-import br.com.aguaboaservicos.filtro.FiltroService;
+import br.com.aguaboaservicos.common.filtro.FiltroService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,6 +30,10 @@ public class ClienteService {
 
     public ClienteInformacoes buscaClientePorId(Long id) {
         return new ClienteInformacoes(repository.findById(id).orElseThrow(EntityNotFoundException::new));
+    }
+
+    public Cliente buscaEntidadeCliente(Long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public ClienteInformacoes cadastraCliente(ClienteCadastro dadosCadastro) {

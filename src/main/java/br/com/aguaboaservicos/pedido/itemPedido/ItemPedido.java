@@ -1,21 +1,16 @@
 package br.com.aguaboaservicos.pedido.itemPedido;
 
-import java.math.BigDecimal;
-
+import br.com.aguaboaservicos.common.utils.NumberUtils;
 import br.com.aguaboaservicos.pedido.model.Pedido;
+import br.com.aguaboaservicos.produto.ProdutoService;
 import br.com.aguaboaservicos.produto.model.Produto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "itens_pedido")
@@ -34,11 +29,35 @@ public class ItemPedido {
 	
 	private BigDecimal desconto = BigDecimal.ZERO;
 	
-	private Integer quantidade = 1;
+	private BigDecimal quantidade = BigDecimal.ONE;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Pedido pedido;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Produto produto;
+
+	private boolean ativo = true;
+
+	public ItemPedido(Pedido pedido, ProdutoService produtoService, ItemPedidoCadastro dadosCadastro) {
+		this.pedido = pedido;
+		
+		this.produto = produtoService.buscaEntidadeProduto(dadosCadastro.produtoId());
+		
+		this.quantidade = dadosCadastro.quantidade();
+		
+		if (NumberUtils.isNotEmpty(dadosCadastro.desconto())) {
+			this.desconto = dadosCadastro.desconto();
+		}
+		
+		if (NumberUtils.isNotEmpty(dadosCadastro.precoUnitario())) {
+			this.precoUnitario = dadosCadastro.precoUnitario();
+		} else {
+			this.precoUnitario = this.produto.getPreco();
+		}
+	}
+
+	public void cancelaItem() {
+		this.ativo = false;
+	}
 }

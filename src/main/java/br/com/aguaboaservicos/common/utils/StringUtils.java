@@ -1,4 +1,4 @@
-package br.com.aguaboaservicos.utils;
+package br.com.aguaboaservicos.common.utils;
 
 public class StringUtils {
 

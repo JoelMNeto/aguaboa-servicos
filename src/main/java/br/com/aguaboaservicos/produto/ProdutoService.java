@@ -1,6 +1,6 @@
 package br.com.aguaboaservicos.produto;
 
-import br.com.aguaboaservicos.filtro.FiltroService;
+import br.com.aguaboaservicos.common.filtro.FiltroService;
 import br.com.aguaboaservicos.produto.filtros.FiltroProduto;
 import br.com.aguaboaservicos.produto.model.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,6 +30,10 @@ public class ProdutoService {
 
     public ProdutoInformacoes buscaProdutoPorId(Long id) {
         return new ProdutoInformacoes(repository.findById(id).orElseThrow(EntityNotFoundException::new));
+    }
+
+    public Produto buscaEntidadeProduto(Long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public ProdutoInformacoes cadastraProduto(ProdutoCadastro dadosCadastro) {

@@ -1,6 +1,6 @@
 package br.com.aguaboaservicos.produto.model;
 
-import br.com.aguaboaservicos.utils.StringUtils;
+import br.com.aguaboaservicos.common.utils.StringUtils;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -2,7 +2,7 @@ package br.com.aguaboaservicos.produto.filtros;
 
 import br.com.aguaboaservicos.produto.model.Produto;
 import br.com.aguaboaservicos.produto.model.ProdutoFiltros;
-import br.com.aguaboaservicos.utils.StringUtils;
+import br.com.aguaboaservicos.common.utils.StringUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

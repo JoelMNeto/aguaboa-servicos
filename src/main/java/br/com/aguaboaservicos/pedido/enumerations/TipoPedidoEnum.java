@@ -4,6 +4,12 @@ import lombok.Getter;
 
 @Getter
 public enum TipoPedidoEnum {
-	ENTREGA,
-	RETIRADA
+	ENTREGA("ENTREGA"),
+	RETIRADA("RETIRADA");
+
+    private final String descricao;
+
+    TipoPedidoEnum(String descricao) {
+        this.descricao = descricao;
+    }
 }

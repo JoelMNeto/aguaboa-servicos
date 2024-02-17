@@ -1,4 +1,4 @@
-package br.com.aguaboaservicos.filtro;
+package br.com.aguaboaservicos.common.filtro;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;

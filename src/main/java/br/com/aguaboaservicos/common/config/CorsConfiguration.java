@@ -1,4 +1,4 @@
-package br.com.aguaboaservicos.config;
+package br.com.aguaboaservicos.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

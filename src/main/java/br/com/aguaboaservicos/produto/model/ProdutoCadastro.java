@@ -5,5 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public record ProdutoCadastro(@NotBlank String nome, String marca, @NotNull BigDecimal preco) {
+public record ProdutoCadastro(@NotBlank(message = "Campo nome é obrigatório") String nome, String marca,
+                              @NotNull(message = "Campo preço é obrigatório") BigDecimal preco) {
 }

@@ -1,4 +1,4 @@
-package br.com.aguaboaservicos.utils;
+package br.com.aguaboaservicos.common.utils;
 
 import java.util.ArrayList;
 import java.util.Collections;

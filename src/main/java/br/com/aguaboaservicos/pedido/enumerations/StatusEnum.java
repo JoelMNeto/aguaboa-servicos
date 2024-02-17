@@ -5,12 +5,12 @@ import lombok.Getter;
 @Getter
 public enum StatusEnum {
 
-	PAGO("PAGO"),
-	EM_ABERTO("EM ABERTO");
-	
-	private String descricao;
+    PAGO("PAGO"),
+    EM_ABERTO("EM ABERTO");
 
-	StatusEnum(String descricao) {
-		this.descricao = descricao;
-	} 
+    private final String descricao;
+
+    StatusEnum(String descricao) {
+        this.descricao = descricao;
+    }
 }

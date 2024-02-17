@@ -2,7 +2,7 @@ package br.com.aguaboaservicos.cliente.model.endereco;
 
 import java.time.LocalDateTime;
 
-import br.com.aguaboaservicos.utils.StringUtils;
+import br.com.aguaboaservicos.common.utils.StringUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,6 +40,8 @@ public class Endereco {
 
 	@Column(name = "data_de_criacao")
 	private LocalDateTime dataDeCriacao = LocalDateTime.now();
+
+	private boolean ativo = true;
 
 	public Endereco(EnderecoBean endereco) {
 		this.logradouro = endereco.logradouro();

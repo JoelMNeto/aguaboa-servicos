@@ -1,4 +1,4 @@
-package br.com.aguaboaservicos.config;
+package br.com.aguaboaservicos.common.config;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
