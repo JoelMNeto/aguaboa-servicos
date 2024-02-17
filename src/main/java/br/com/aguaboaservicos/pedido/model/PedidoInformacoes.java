@@ -2,7 +2,6 @@ package br.com.aguaboaservicos.pedido.model;
 
 import br.com.aguaboaservicos.cliente.model.ClienteInformacoes;
 import br.com.aguaboaservicos.pedido.enumerations.FormaPagamentoEnum;
-import br.com.aguaboaservicos.pedido.enumerations.StatusEnum;
 import br.com.aguaboaservicos.pedido.enumerations.TipoPedidoEnum;
 
 import java.math.BigDecimal;

@@ -7,6 +7,6 @@ import jakarta.persistence.criteria.Root;
 
 public interface Filtro<T, K> {
 	
-	public Predicate adicionaFiltro(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder, K filtros);
+	Predicate adicionaFiltro(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder, K filtros);
 
 }
