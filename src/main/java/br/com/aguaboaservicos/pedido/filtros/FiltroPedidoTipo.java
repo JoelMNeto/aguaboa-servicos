@@ -13,6 +13,10 @@ public class FiltroPedidoTipo implements FiltroPedido {
     @Override
     public Predicate adicionaFiltro(Root<Pedido> root, CriteriaQuery<?> query, CriteriaBuilder builder,
                                     PedidoFiltros filtros) {
-        return null;
+        if (filtros.tipo() == null) {
+            return null;
+        }
+
+        return builder.equal(root.get("tipoDoPedido"), filtros.tipo());
     }
 }

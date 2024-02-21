@@ -1,5 +1,6 @@
 package br.com.aguaboaservicos.pedido.filtros;
 
+import br.com.aguaboaservicos.common.utils.NumberUtils;
 import br.com.aguaboaservicos.pedido.model.Pedido;
 import br.com.aguaboaservicos.pedido.model.PedidoFiltros;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -13,6 +14,10 @@ public class FiltroPedidoCliente implements FiltroPedido {
     @Override
     public Predicate adicionaFiltro(Root<Pedido> root, CriteriaQuery<?> query, CriteriaBuilder builder,
                                     PedidoFiltros filtros) {
-        return null;
+        if (NumberUtils.isEmpty(filtros.clieteId())) {
+            return null;
+        }
+
+        return builder.equal(root.get("cliente").get("id"), filtros.clieteId());
     }
 }

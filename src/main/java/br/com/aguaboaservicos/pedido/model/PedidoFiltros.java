@@ -6,6 +6,6 @@ import br.com.aguaboaservicos.pedido.enumerations.TipoPedidoEnum;
 
 import java.time.LocalDate;
 
-public record PedidoFiltros(Long clieteId, StatusEnum status, TipoPedidoEnum tipo, FormaPagamentoEnum formaPagamento,
+public record PedidoFiltros(Long clieteId, String busca, StatusEnum status, TipoPedidoEnum tipo, FormaPagamentoEnum formaPagamento,
                             LocalDate peridoInicio, LocalDate periodoFim) {
 }

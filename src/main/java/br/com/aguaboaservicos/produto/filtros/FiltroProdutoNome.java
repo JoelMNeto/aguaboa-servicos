@@ -14,11 +14,11 @@ public class FiltroProdutoNome implements FiltroProduto {
 
     @Override
     public Predicate adicionaFiltro(Root<Produto> root, CriteriaQuery<?> query, CriteriaBuilder builder,
-                                    ProdutoFiltros filtro) {
-        if (StringUtils.isEmpty(filtro.nome())) {
+                                    ProdutoFiltros filtros) {
+        if (StringUtils.isEmpty(filtros.nome())) {
             return null;
         }
 
-        return builder.like(builder.upper(root.get("nome")), "%" + filtro.nome().toUpperCase() + "%");
+        return builder.equal(root.get("nome"), filtros.nome());
     }
 }

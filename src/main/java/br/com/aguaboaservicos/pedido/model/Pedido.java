@@ -68,16 +68,17 @@ public class Pedido {
 
         cadastraItensPedido(dadosLancamento.itens(), produtoService);
 
-        if (NumberUtils.isNotEmpty(dadosLancamento.frete())) {
-            this.frete = dadosLancamento.frete();
-        }
-
         if (NumberUtils.isNotEmpty(dadosLancamento.valorPago())) {
             this.valorPago = dadosLancamento.valorPago();
         }
 
         if (dadosLancamento.tipo() != null) {
             this.tipoDoPedido = dadosLancamento.tipo();
+        }
+
+        if (NumberUtils.isNotEmpty(dadosLancamento.frete()) &&
+            this.tipoDoPedido == TipoPedidoEnum.ENTREGA) {
+            this.frete = dadosLancamento.frete();
         }
 
         if (dadosLancamento.formaPagamento() != null) {

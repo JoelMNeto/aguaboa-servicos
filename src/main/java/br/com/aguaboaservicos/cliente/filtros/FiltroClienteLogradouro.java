@@ -14,12 +14,12 @@ public class FiltroClienteLogradouro implements FiltroCliente {
 
     @Override
     public Predicate adicionaFiltro(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder builder,
-                                    ClienteFiltros filtro) {
-        if (StringUtils.isEmpty(filtro.logradouro())) {
+                                    ClienteFiltros filtros) {
+        if (StringUtils.isEmpty(filtros.logradouro())) {
             return null;
         }
 
-        return builder.equal(root.get("endereco").get("logradouro"), filtro.logradouro());
+        return builder.equal(root.get("endereco").get("logradouro"), filtros.logradouro());
     }
 
 }

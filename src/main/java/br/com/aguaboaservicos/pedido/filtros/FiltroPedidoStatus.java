@@ -13,6 +13,10 @@ public class FiltroPedidoStatus implements FiltroPedido {
     @Override
     public Predicate adicionaFiltro(Root<Pedido> root, CriteriaQuery<?> query, CriteriaBuilder builder,
                                     PedidoFiltros filtros) {
-        return null;
+        if (filtros.status() == null) {
+            return null;
+        }
+
+        return builder.equal(root.get("status"), filtros.status());
     }
 }

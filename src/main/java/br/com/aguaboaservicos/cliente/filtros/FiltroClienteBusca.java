@@ -14,18 +14,18 @@ public class FiltroClienteBusca implements FiltroCliente {
 
     @Override
     public Predicate adicionaFiltro(Root<Cliente> root, CriteriaQuery<?> query, CriteriaBuilder builder,
-                                    ClienteFiltros filtro) {
-        if (StringUtils.isEmpty(filtro.busca())) {
+                                    ClienteFiltros filtros) {
+        if (StringUtils.isEmpty(filtros.busca())) {
             return null;
         }
 
-        if (StringUtils.isOnlyNumbers(filtro.busca())) {
-            return builder.equal(root.get("id"), filtro.busca());
+        if (StringUtils.isOnlyNumbers(filtros.busca())) {
+            return builder.equal(root.get("id"), filtros.busca());
         }
 
-        return builder.or(builder.like(builder.upper(root.get("nome")), "%" + filtro.busca().toUpperCase() + "%"),
+        return builder.or(builder.like(builder.upper(root.get("nome")), "%" + filtros.busca().toUpperCase() + "%"),
                 builder.like(builder.upper(root.get("endereco").get("logradouro")),
-                        "%" + filtro.busca().toUpperCase() + "%"));
+                        "%" + filtros.busca().toUpperCase() + "%"));
     }
 
 }

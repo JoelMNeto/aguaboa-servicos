@@ -13,6 +13,10 @@ public class FiltroPedidoFormaPagamento implements FiltroPedido {
     @Override
     public Predicate adicionaFiltro(Root<Pedido> root, CriteriaQuery<?> query, CriteriaBuilder builder,
                                     PedidoFiltros filtros) {
-        return null;
+        if (filtros.formaPagamento() == null) {
+            return null;
+        }
+
+        return builder.equal(root.get("formaPagamento"), filtros.formaPagamento());
     }
 }

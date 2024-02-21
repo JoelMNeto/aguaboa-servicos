@@ -14,16 +14,16 @@ public class FiltroProdutoBusca implements FiltroProduto {
 
     @Override
     public Predicate adicionaFiltro(Root<Produto> root, CriteriaQuery<?> query, CriteriaBuilder builder,
-                                    ProdutoFiltros filtro) {
-        if (StringUtils.isEmpty(filtro.busca())) {
+                                    ProdutoFiltros filtros) {
+        if (StringUtils.isEmpty(filtros.busca())) {
             return null;
         }
 
-        if (StringUtils.isOnlyNumbers(filtro.busca())) {
-            return builder.equal(root.get("id"), filtro.busca());
+        if (StringUtils.isOnlyNumbers(filtros.busca())) {
+            return builder.equal(root.get("id"), filtros.busca());
         }
 
-        return builder.or(builder.like(builder.upper(root.get("nome")), "%" + filtro.busca().toUpperCase() + "%"),
-                builder.like(builder.upper(root.get("marca")), "%" + filtro.busca().toUpperCase() + "%"));
+        return builder.or(builder.like(builder.upper(root.get("nome")), "%" + filtros.busca().toUpperCase() + "%"),
+                builder.like(builder.upper(root.get("marca")), "%" + filtros.busca().toUpperCase() + "%"));
     }
 }
