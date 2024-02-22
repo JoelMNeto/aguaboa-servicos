@@ -5,6 +5,7 @@ import br.com.aguaboaservicos.common.filtro.FiltroService;
 import br.com.aguaboaservicos.pedido.filtros.FiltroPedido;
 import br.com.aguaboaservicos.pedido.itemPedido.ItemPedidoInformacoes;
 import br.com.aguaboaservicos.pedido.model.*;
+import br.com.aguaboaservicos.pedido.validacoes.ValidacaoLancamentoPedido;
 import br.com.aguaboaservicos.produto.ProdutoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,9 @@ public class PedidoService {
     @Autowired
     List<FiltroPedido> filtroList;
 
+    @Autowired
+    List<ValidacaoLancamentoPedido> validacoes;
+
     public Page<PedidoInformacoes> listaPedidos(Pageable paginacao, PedidoFiltros filtros) {
         return repository.findAll(filtroService.adicicionaFiltros(filtros, filtroList), paginacao)
                 .map(PedidoInformacoes::new);
@@ -54,6 +58,8 @@ public class PedidoService {
     }
 
     public PedidoInformacoes lancaPedido(PedidoLancamento dadosLancamento) {
+        validacoes.forEach(v -> v.validar(dadosLancamento));
+
         var pedido = new Pedido(dadosLancamento, clienteService, produtoService);
 
         repository.save(pedido);
