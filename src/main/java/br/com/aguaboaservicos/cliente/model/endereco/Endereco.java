@@ -90,4 +90,7 @@ public class Endereco {
 		}
 	}
 
+	public void desativaEndereco() {
+		this.ativo = false;
+	}
 }

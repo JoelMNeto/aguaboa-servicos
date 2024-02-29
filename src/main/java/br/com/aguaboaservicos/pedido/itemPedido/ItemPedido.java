@@ -19,45 +19,47 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemPedido {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column(name = "preco_unitario")
-	private BigDecimal precoUnitario;
-	
-	private BigDecimal desconto = BigDecimal.ZERO;
-	
-	private BigDecimal quantidade = BigDecimal.ONE;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Pedido pedido;
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Produto produto;
+    @Column(name = "preco_unitario")
+    private BigDecimal precoUnitario;
 
-	private boolean ativo = true;
+    private BigDecimal desconto = BigDecimal.ZERO;
 
-	public ItemPedido(Pedido pedido, ProdutoService produtoService, ItemPedidoCadastro dadosCadastro) {
-		this.pedido = pedido;
-		
-		this.produto = produtoService.buscaEntidadeProduto(dadosCadastro.produtoId());
-		
-		this.quantidade = dadosCadastro.quantidade();
-		
-		if (NumberUtils.isNotEmpty(dadosCadastro.desconto())) {
-			this.desconto = dadosCadastro.desconto();
-		}
-		
-		if (NumberUtils.isNotEmpty(dadosCadastro.precoUnitario())) {
-			this.precoUnitario = dadosCadastro.precoUnitario();
-		} else {
-			this.precoUnitario = this.produto.getPreco();
-		}
-	}
+    private BigDecimal quantidade = BigDecimal.ONE;
 
-	public void cancelaItem() {
-		this.ativo = false;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Pedido pedido;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Produto produto;
+
+    private boolean ativo = true;
+
+    public ItemPedido(Pedido pedido, ProdutoService produtoService, ItemPedidoCadastro dadosCadastro) {
+        this.pedido = pedido;
+
+        this.produto = produtoService.buscaEntidadeProduto(dadosCadastro.produtoId());
+
+        this.quantidade = dadosCadastro.quantidade();
+
+        if (NumberUtils.isNotEmpty(dadosCadastro.desconto()) &&
+                dadosCadastro.desconto().compareTo(BigDecimal.ZERO) >= 1) {
+            this.desconto = dadosCadastro.desconto();
+        }
+
+        if (NumberUtils.isNotEmpty(dadosCadastro.precoUnitario()) &&
+                dadosCadastro.precoUnitario().compareTo(BigDecimal.ZERO) >= 1) {
+            this.precoUnitario = dadosCadastro.precoUnitario();
+        } else {
+            this.precoUnitario = this.produto.getPreco();
+        }
+    }
+
+    public void cancelaItem() {
+        this.ativo = false;
+    }
 }

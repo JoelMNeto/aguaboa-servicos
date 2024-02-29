@@ -5,6 +5,7 @@ create table itens_pedido (
 	desconto numeric,
 	pedido_id int not null,
 	produto_id int not null,
+    ativo boolean,
 	foreign key (pedido_id) references pedidos(id),
 	foreign key (produto_id) references produtos(id)
 );

@@ -5,6 +5,7 @@ import br.com.aguaboaservicos.produto.model.ProdutoCadastro;
 import br.com.aguaboaservicos.produto.model.ProdutoFiltros;
 import br.com.aguaboaservicos.produto.model.ProdutoInformacoes;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,7 @@ public class ProdutoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<ProdutoInformacoes> cadastraProduto(@RequestBody ProdutoCadastro dadosCadastro,
+    public ResponseEntity<ProdutoInformacoes> cadastraProduto(@RequestBody @Valid ProdutoCadastro dadosCadastro,
                                                               UriComponentsBuilder uriBuilder) {
         var produto = service.cadastraProduto(dadosCadastro);
 
@@ -48,7 +49,7 @@ public class ProdutoController {
 
     @PutMapping
     @Transactional
-    public ResponseEntity<ProdutoInformacoes> alteraProduto(@RequestBody ProdutoAlteracao dadosAlteracao) {
+    public ResponseEntity<ProdutoInformacoes> alteraProduto(@RequestBody @Valid ProdutoAlteracao dadosAlteracao) {
         var produto = service.alteraProduto(dadosAlteracao);
 
         return ResponseEntity.ok(produto);

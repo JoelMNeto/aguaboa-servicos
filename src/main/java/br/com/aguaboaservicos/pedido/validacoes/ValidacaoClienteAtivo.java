@@ -17,7 +17,10 @@ public class ValidacaoClienteAtivo implements ValidacaoLancamentoPedido {
         var cliente = clienteRepository.findById(dadosLancamento.clinteId()).orElseThrow(EntityNotFoundException::new);
 
         if (!cliente.isAtivo()) {
-            throw new RuntimeException("Não é possível lançar pedido para um cliente inativo!");
+
+            throw new RuntimeException(
+                    "Não é possível lançar pedido para um cliente inativo!" + "Cliente: " + cliente.getId() + " - " +
+                            cliente.getNome());
         }
     }
 }

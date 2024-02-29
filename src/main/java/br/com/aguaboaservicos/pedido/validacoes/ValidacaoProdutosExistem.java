@@ -17,12 +17,17 @@ public class ValidacaoProdutosExistem implements ValidacaoLancamentoPedido {
         var produtos = dadosLancamento
                 .itens()
                 .stream()
-                .map(i -> !produtoRepository.existsById(i.produtoId()))
-                .filter(Boolean::booleanValue)
+                .filter(i -> !produtoRepository.existsById(i.produtoId()))
                 .toList();
 
         if (ListUtils.isNotEmpty(produtos)) {
-            throw new RuntimeException("Não é possível lançar um pedido com produtos inexistentes!");
+            StringBuilder mensagem = new StringBuilder("Não é possível lançar um pedido com produtos inexistentes!\n");
+
+            mensagem.append("Produtos: ");
+
+            produtos.forEach(p -> mensagem.append(p.produtoId()).append("\n"));
+
+            throw new RuntimeException(mensagem.toString());
         }
     }
 }

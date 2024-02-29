@@ -2,6 +2,7 @@ package br.com.aguaboaservicos.cliente.model.endereco;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
 public record EnderecoBean(@NotBlank(message = "Campo logradouro é obrigatório!") String logradouro,
 
@@ -11,6 +12,7 @@ public record EnderecoBean(@NotBlank(message = "Campo logradouro é obrigatório
 
 		String complemento,
 
+		@Pattern(regexp = "(\\d{5}-\\d{3})?")
 		String cep,
 
 		String cidade) {

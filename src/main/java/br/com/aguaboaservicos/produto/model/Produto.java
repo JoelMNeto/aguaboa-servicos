@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "produtos")
@@ -31,7 +31,7 @@ public class Produto {
     private boolean ativo = true;
 
     @Column(name = "data_de_criacao")
-    private LocalDate dataDeCriacao = LocalDate.now();
+    private LocalDateTime dataDeCriacao = LocalDateTime.now();
 
     public Produto(ProdutoCadastro dadosCadastro) {
         this.nome = dadosCadastro.nome();

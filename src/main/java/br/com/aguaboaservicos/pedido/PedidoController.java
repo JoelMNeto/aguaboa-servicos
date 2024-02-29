@@ -5,6 +5,8 @@ import br.com.aguaboaservicos.pedido.model.PedidoAlteracao;
 import br.com.aguaboaservicos.pedido.model.PedidoFiltros;
 import br.com.aguaboaservicos.pedido.model.PedidoInformacoes;
 import br.com.aguaboaservicos.pedido.model.PedidoLancamento;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +46,8 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<PedidoInformacoes> lancaPedido(@RequestBody PedidoLancamento dadosLancamento,
+    @Transactional
+    public ResponseEntity<PedidoInformacoes> lancaPedido(@RequestBody @Valid PedidoLancamento dadosLancamento,
                                                          UriComponentsBuilder uriBuilder) {
         var pedido = service.lancaPedido(dadosLancamento);
 
@@ -54,13 +57,15 @@ public class PedidoController {
     }
 
     @PutMapping
-    public ResponseEntity<PedidoInformacoes> alteraPedido(@RequestBody PedidoAlteracao dadosAlteracao) {
+    @Transactional
+    public ResponseEntity<PedidoInformacoes> alteraPedido(@RequestBody @Valid PedidoAlteracao dadosAlteracao) {
         var pedido = service.alteraPedido(dadosAlteracao);
 
         return ResponseEntity.ok(pedido);
     }
 
     @DeleteMapping("/{id}")
+    @Transactional
     public ResponseEntity<Void> cancelaPedido(@PathVariable Long id) {
         service.cancelaPedido(id);
 

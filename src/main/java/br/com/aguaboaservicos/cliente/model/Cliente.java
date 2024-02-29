@@ -50,7 +50,7 @@ public class Cliente {
 		this.nome = cliente.nome();
 		this.endereco = new Endereco(cliente.endereco());
 
-		if (StringUtils.isOnlyNumbers(cliente.contato())) {			
+		if (StringUtils.isNotEmpty(cliente.contato())) {
 			this.contato = cliente.contato();
 		}
 	}
@@ -72,6 +72,15 @@ public class Cliente {
 
 	public void desativaCliente() {
 		this.ativo = false;
-		this.endereco.setAtivo(false);
+		this.endereco.desativaEndereco();
 	}
+
+    public void atualizaSaldo(BigDecimal valor) {
+		if (valor.compareTo(BigDecimal.ZERO) <= 0) {
+			this.saldoEmConta = this.saldoEmConta.add(valor.abs());
+			return;
+		}
+
+		this.saldoEmConta = this.saldoEmConta.subtract(valor.abs());
+    }
 }

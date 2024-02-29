@@ -12,18 +12,24 @@ public class ValidacaoProdutosAtivos implements ValidacaoLancamentoPedido {
 
     @Autowired
     private ProdutoRepository produtoRepository;
-    
+
     @Override
     public void validar(PedidoLancamento dadosLancamento) {
         var produtos = dadosLancamento
-                                    .itens()
-                                    .stream()
-                                    .map(i -> produtoRepository.findById(i.produtoId()).orElseThrow(EntityNotFoundException::new))
-                                    .filter(p -> !p.isAtivo())
-                                    .toList();
+                .itens()
+                .stream()
+                .map(i -> produtoRepository.findById(i.produtoId()).orElseThrow(EntityNotFoundException::new))
+                .filter(p -> !p.isAtivo())
+                .toList();
 
         if (ListUtils.isNotEmpty(produtos)) {
-            throw new RuntimeException("Não é possível lançar um pedido com produtos inativos!");
+            StringBuilder mensagem = new StringBuilder("Não é possível lançar um pedido com produtos inativos!\n");
+
+            mensagem.append("Produtos: ");
+
+            produtos.forEach(p -> mensagem.append(p.getId()).append(" - ").append(p.getNome()).append("\n"));
+
+            throw new RuntimeException(mensagem.toString());
         }
     }
 }

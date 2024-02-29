@@ -14,10 +14,10 @@ public class FiltroPedidoCliente implements FiltroPedido {
     @Override
     public Predicate adicionaFiltro(Root<Pedido> root, CriteriaQuery<?> query, CriteriaBuilder builder,
                                     PedidoFiltros filtros) {
-        if (NumberUtils.isEmpty(filtros.clieteId())) {
+        if (NumberUtils.isEmpty(filtros.clienteId())) {
             return null;
         }
 
-        return builder.equal(root.get("cliente").get("id"), filtros.clieteId());
+        return builder.equal(root.get("cliente").get("id"), filtros.clienteId());
     }
 }

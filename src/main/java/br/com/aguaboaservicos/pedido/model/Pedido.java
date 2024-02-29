@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,9 +53,9 @@ public class Pedido {
     private FormaPagamentoEnum formaPagamento = FormaPagamentoEnum.DINHEIRO;
 
     @Column(name = "data_de_criacao")
-    private LocalDate dataDeCriacao = LocalDate.now();
+    private LocalDateTime dataDeCriacao = LocalDateTime.now();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Cliente cliente;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
@@ -76,8 +76,7 @@ public class Pedido {
             this.tipoDoPedido = dadosLancamento.tipo();
         }
 
-        if (NumberUtils.isNotEmpty(dadosLancamento.frete()) &&
-            this.tipoDoPedido == TipoPedidoEnum.ENTREGA) {
+        if (NumberUtils.isNotEmpty(dadosLancamento.frete())) {
             this.frete = dadosLancamento.frete();
         }
 
@@ -115,19 +114,13 @@ public class Pedido {
     private void atualizaValoresPedido() {
         this.valorAtualizado = this.valorTotal.subtract(this.valorPago);
 
-        if (this.valorAtualizado.compareTo(BigDecimal.ZERO) == 0) {
+        this.cliente.atualizaSaldo(this.valorAtualizado);
+
+        if (this.valorAtualizado.compareTo(BigDecimal.ZERO) <= 0) {
             this.status = StatusEnum.PAGO;
-            return;
+
+            this.valorAtualizado = BigDecimal.ZERO;
         }
-
-        BigDecimal valor = this.valorAtualizado.abs();
-
-        if (this.valorAtualizado.compareTo(BigDecimal.ZERO) > 0) {
-            this.cliente.setSaldoEmConta(this.cliente.getSaldoEmConta().subtract(valor));
-            return;
-        }
-
-        this.cliente.setSaldoEmConta(this.cliente.getSaldoEmConta().add(valor));
     }
 
     private void calculaValoresPedido() {
