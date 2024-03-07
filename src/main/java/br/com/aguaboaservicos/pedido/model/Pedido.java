@@ -91,7 +91,7 @@ public class Pedido {
 
     public void alteraPedido(PedidoAlteracao dadosAlteracao, ProdutoService produtoService) {
         if (NumberUtils.isNotEmpty(dadosAlteracao.valorPago())) {
-            this.valorPago = dadosAlteracao.valorPago();
+            this.valorPago = this.valorPago.add(dadosAlteracao.valorPago());
         }
 
         if (ListUtils.isNotEmpty(dadosAlteracao.itens())) {
@@ -114,7 +114,7 @@ public class Pedido {
     private void atualizaValoresPedido() {
         this.valorAtualizado = this.valorTotal.subtract(this.valorPago);
 
-        this.cliente.atualizaSaldo(this.valorAtualizado);
+        this.cliente.atualizaSaldo(this.valorAtualizado, this.valorTotal);
 
         if (this.valorAtualizado.compareTo(BigDecimal.ZERO) <= 0) {
             this.status = StatusEnum.PAGO;

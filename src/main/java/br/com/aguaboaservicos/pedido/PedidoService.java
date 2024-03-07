@@ -6,6 +6,7 @@ import br.com.aguaboaservicos.pedido.filtros.FiltroPedido;
 import br.com.aguaboaservicos.pedido.itemPedido.ItemPedidoInformacoes;
 import br.com.aguaboaservicos.pedido.model.*;
 import br.com.aguaboaservicos.pedido.validacoes.ValidacaoLancamentoPedido;
+import br.com.aguaboaservicos.pedido.validacoes.itemValidacoes.ValidacaoItemPedido;
 import br.com.aguaboaservicos.produto.ProdutoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class PedidoService {
     @Autowired
     List<ValidacaoLancamentoPedido> validacoes;
 
+    @Autowired
+    List<ValidacaoItemPedido> validacoesItens;
+
     public Page<PedidoInformacoes> listaPedidos(Pageable paginacao, PedidoFiltros filtros) {
         return repository.findAll(filtroService.adicicionaFiltros(filtros, filtroList), paginacao)
                 .map(PedidoInformacoes::new);
@@ -60,6 +64,8 @@ public class PedidoService {
     public PedidoInformacoes lancaPedido(PedidoLancamento dadosLancamento) {
         validacoes.forEach(v -> v.validar(dadosLancamento));
 
+        dadosLancamento.itens().forEach(i -> validacoesItens.forEach(v -> v.validar(i)));
+
         var pedido = new Pedido(dadosLancamento, clienteService, produtoService);
 
         repository.save(pedido);
@@ -72,7 +78,7 @@ public class PedidoService {
 
         pedido.alteraPedido(dadosAlteracao, produtoService);
 
-        return null;
+        return new PedidoInformacoes(pedido);
     }
 
     public void cancelaPedido(Long id) {

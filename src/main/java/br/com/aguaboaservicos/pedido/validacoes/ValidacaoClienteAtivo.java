@@ -19,7 +19,7 @@ public class ValidacaoClienteAtivo implements ValidacaoLancamentoPedido {
         if (!cliente.isAtivo()) {
 
             throw new RuntimeException(
-                    "Não é possível lançar pedido para um cliente inativo!" + "Cliente: " + cliente.getId() + " - " +
+                    "Não é possível lançar pedido para um cliente inativo! " + "Cliente: " + cliente.getId() + " - " +
                             cliente.getNome());
         }
     }
