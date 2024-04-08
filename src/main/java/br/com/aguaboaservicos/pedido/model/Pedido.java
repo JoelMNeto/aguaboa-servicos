@@ -114,13 +114,21 @@ public class Pedido {
     private void atualizaValoresPedido() {
         this.valorAtualizado = this.valorTotal.subtract(this.valorPago);
 
-        this.cliente.atualizaSaldo(this.valorAtualizado, this.valorTotal);
+        if (this.valorAtualizado.compareTo(BigDecimal.ZERO) > 0) {
+            this.cliente.subtraiSaldo(this.valorAtualizado.abs());
 
-        if (this.valorAtualizado.compareTo(BigDecimal.ZERO) <= 0) {
-            this.status = StatusEnum.PAGO;
-
-            this.valorAtualizado = BigDecimal.ZERO;
+            return;
         }
+
+        BigDecimal valor = this.valorAtualizado.compareTo(BigDecimal.ZERO) == 0 ?
+                this.valorTotal.abs() :
+                this.valorAtualizado.abs();
+
+        this.cliente.somaSaldo(valor);
+
+        this.status = StatusEnum.PAGO;
+
+        this.valorAtualizado = BigDecimal.ZERO;
     }
 
     private void calculaValoresPedido() {

@@ -75,17 +75,11 @@ public class Cliente {
 		this.endereco.desativaEndereco();
 	}
 
-    public void atualizaSaldo(BigDecimal valorAtualizado, BigDecimal valorTotal) {
-		if (valorAtualizado.compareTo(BigDecimal.ZERO) == 0) {
-			this.saldoEmConta = this.saldoEmConta.add(valorTotal.abs());
-			return;
-		}
-
-		if (valorAtualizado.compareTo(BigDecimal.ZERO) <= 0) {
-			this.saldoEmConta = this.saldoEmConta.add(valorAtualizado.abs());
-			return;
-		}
-
-		this.saldoEmConta = this.saldoEmConta.subtract(valorAtualizado.abs());
+    public void somaSaldo(BigDecimal valor) {
+		this.saldoEmConta = this.saldoEmConta.add(valor);
     }
+
+	public void subtraiSaldo(BigDecimal valor) {
+		this.saldoEmConta = this.saldoEmConta.subtract(valor);
+	}
 }
