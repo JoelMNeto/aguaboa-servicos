@@ -2,7 +2,9 @@ package br.com.aguaboaservicos.pedido;
 
 import br.com.aguaboaservicos.cliente.ClienteService;
 import br.com.aguaboaservicos.common.filtro.FiltroService;
+import br.com.aguaboaservicos.common.impressao.ImpressaoService;
 import br.com.aguaboaservicos.pedido.filtros.FiltroPedido;
+import br.com.aguaboaservicos.pedido.impressao.ImpressaoPedido;
 import br.com.aguaboaservicos.pedido.itemPedido.ItemPedidoInformacoes;
 import br.com.aguaboaservicos.pedido.model.*;
 import br.com.aguaboaservicos.pedido.validacoes.ValidacaoLancamentoPedido;
@@ -41,6 +43,9 @@ public class PedidoService {
     @Autowired
     List<ValidacaoItemPedido> validacoesItens;
 
+    @Autowired
+    ImpressaoService impressaoService;
+
     public Page<PedidoInformacoes> listaPedidos(Pageable paginacao, PedidoFiltros filtros) {
         return repository.findAll(filtroService.adicicionaFiltros(filtros, filtroList), paginacao)
                 .map(PedidoInformacoes::new);
@@ -70,7 +75,11 @@ public class PedidoService {
 
         repository.save(pedido);
 
-        return new PedidoInformacoes(pedido);
+        PedidoInformacoes pedidoInformacoes = new PedidoInformacoes(pedido);
+
+        impressaoService.imprimir(new ImpressaoPedido(pedidoInformacoes));
+
+        return pedidoInformacoes;
     }
 
     public PedidoInformacoes alteraPedido(PedidoAlteracao dadosAlteracao) {

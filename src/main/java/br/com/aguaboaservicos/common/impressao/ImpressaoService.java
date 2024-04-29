@@ -10,10 +10,10 @@ import java.awt.print.PrinterJob;
 @Service
 public class ImpressaoService {
 
-    public void imprimir(Printable printable, Double heigth) {
+    public void imprimir(Printable printable) {
         PrinterJob pj = PrinterJob.getPrinterJob();
 
-        pj.setPrintable(printable, getPageFormat(pj, heigth));
+        pj.setPrintable(printable, getPageFormat(pj));
 
         try {
             pj.print();
@@ -22,16 +22,14 @@ public class ImpressaoService {
         }
     }
 
-    private PageFormat getPageFormat(PrinterJob pj, Double heigth) {
+    private PageFormat getPageFormat(PrinterJob pj) {
         PageFormat pf = pj.defaultPage();
 
         Paper paper = pf.getPaper();
 
-        paper.setImageableArea(0, 0, pf.getWidth(), pf.getHeight() + heigth);
+        paper.setImageableArea(0, 0, pf.getWidth(), pf.getHeight());
 
         pf.setPaper(paper);
-
-        pf.setOrientation(PageFormat.PORTRAIT);
 
         pf = pj.validatePage(pf);
 
