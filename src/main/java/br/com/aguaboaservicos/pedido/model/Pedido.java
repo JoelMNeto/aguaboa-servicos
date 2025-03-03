@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -59,6 +61,7 @@ public class Pedido {
     private Cliente cliente;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
     private List<ItemPedido> itens = new ArrayList<>();
 
     private boolean ativo = true;
@@ -109,6 +112,10 @@ public class Pedido {
         this.ativo = false;
 
         this.itens.forEach(ItemPedido::cancelaItem);
+    }
+
+    public List<ItemPedido> getItensPedido() {
+        return this.itens;
     }
 
     private void atualizaValoresPedido() {

@@ -24,7 +24,7 @@ public class ClienteController {
 
     @GetMapping
     public ResponseEntity<Page<ClienteInformacoes>> listaClientes(
-            @PageableDefault(size = 25, sort = {"saldoEmConta"}, direction = Direction.DESC) Pageable paginacao,
+            @PageableDefault(size = 25, sort = {"saldoEmConta"}, direction = Direction.ASC) Pageable paginacao,
             ClienteFiltros filtros) {
         var pagina = service.listaClientes(paginacao, filtros);
 

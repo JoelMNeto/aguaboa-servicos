@@ -19,6 +19,6 @@ public record PedidoInformacoes(Long id, BigDecimal valorTotal, BigDecimal frete
         this(pedido.getId(), pedido.getValorTotal(), pedido.getFrete(), pedido.getStatus(), pedido.getTipoDoPedido(),
                 pedido.getValorAtualizado(), pedido.getValorPago(),
                 pedido.getFormaPagamento(), pedido.getDataDeCriacao(), new ClienteInformacoes(pedido.getCliente()),
-                pedido.getItens().stream().map(ItemPedidoInformacoes::new).toList());
+                pedido.getItensPedido().stream().map(ItemPedidoInformacoes::new).toList());
     }
 }
