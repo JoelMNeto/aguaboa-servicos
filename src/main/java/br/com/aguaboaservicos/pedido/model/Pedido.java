@@ -67,7 +67,7 @@ public class Pedido {
     private boolean ativo = true;
 
     public Pedido(PedidoLancamento dadosLancamento, ClienteService clienteService, ProdutoService produtoService) {
-        this.cliente = clienteService.buscaEntidadeCliente(dadosLancamento.clinteId());
+        this.cliente = clienteService.buscaEntidadeCliente(dadosLancamento.clienteId());
 
         cadastraItensPedido(dadosLancamento.itens(), produtoService);
 

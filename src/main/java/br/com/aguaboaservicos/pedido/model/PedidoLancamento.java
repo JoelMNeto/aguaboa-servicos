@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record PedidoLancamento(@NotNull(message = "Campo cliente é obrigatório") Long clinteId,
+public record PedidoLancamento(@NotNull(message = "Campo cliente é obrigatório") Long clienteId,
                                @NotNull @Valid List<ItemPedidoCadastro> itens,
                                BigDecimal frete, TipoPedidoEnum tipo,
                                FormaPagamentoEnum formaPagamento, BigDecimal valorPago) {

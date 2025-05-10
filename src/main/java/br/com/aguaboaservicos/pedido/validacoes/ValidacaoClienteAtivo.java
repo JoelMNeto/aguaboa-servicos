@@ -14,7 +14,7 @@ public class ValidacaoClienteAtivo implements ValidacaoLancamentoPedido {
 
     @Override
     public void validar(PedidoLancamento dadosLancamento) {
-        var cliente = clienteRepository.findById(dadosLancamento.clinteId()).orElseThrow(EntityNotFoundException::new);
+        var cliente = clienteRepository.findById(dadosLancamento.clienteId()).orElseThrow(EntityNotFoundException::new);
 
         if (!cliente.isAtivo()) {
 

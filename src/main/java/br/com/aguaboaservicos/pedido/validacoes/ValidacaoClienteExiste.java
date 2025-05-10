@@ -14,10 +14,10 @@ public class ValidacaoClienteExiste implements ValidacaoLancamentoPedido {
     @Override
     public void validar(PedidoLancamento dadosLancamento) {
 
-        if (!clienteRepository.existsById(dadosLancamento.clinteId())) {
+        if (!clienteRepository.existsById(dadosLancamento.clienteId())) {
 
             throw new RuntimeException("Não é possível lançar um pedido com um cliente inexistente! " + "Cliente: " +
-                    dadosLancamento.clinteId());
+                    dadosLancamento.clienteId());
         }
     }
 }
