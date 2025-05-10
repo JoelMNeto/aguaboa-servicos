@@ -111,6 +111,8 @@ public class Pedido {
     public void cancelaPedido() {
         this.ativo = false;
 
+        this.cliente.somaSaldo(this.valorAtualizado);
+
         this.itens.forEach(ItemPedido::cancelaItem);
     }
 
