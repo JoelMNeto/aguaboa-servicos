@@ -3,6 +3,7 @@ package br.com.aguaboaservicos.pedido;
 import br.com.aguaboaservicos.cliente.ClienteService;
 import br.com.aguaboaservicos.common.filtro.FiltroService;
 import br.com.aguaboaservicos.common.impressao.ImpressaoService;
+import br.com.aguaboaservicos.pedido.enumerations.TipoPedidoEnum;
 import br.com.aguaboaservicos.pedido.filtros.FiltroPedido;
 import br.com.aguaboaservicos.pedido.impressao.ImpressaoPedido;
 import br.com.aguaboaservicos.pedido.itemPedido.ItemPedidoInformacoes;
@@ -77,7 +78,9 @@ public class PedidoService {
 
         PedidoInformacoes pedidoInformacoes = new PedidoInformacoes(pedido);
 
-        impressaoService.imprimir(new ImpressaoPedido(pedidoInformacoes));
+        if (TipoPedidoEnum.ENTREGA.equals(pedidoInformacoes.tipo())) {
+            impressaoService.imprimir(new ImpressaoPedido(pedidoInformacoes));
+        }
 
         return pedidoInformacoes;
     }
