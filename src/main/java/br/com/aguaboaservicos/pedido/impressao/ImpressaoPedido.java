@@ -111,8 +111,10 @@ public class ImpressaoPedido implements Printable {
                 graphics2D,
                 this.pedido.cliente().endereco().logradouro() + ", " + this.pedido.cliente().endereco().numero(), 10);
 
-        escreveLinha(graphics2D, "Bairro: ", 0);
-        escreveLinhaDireita(graphics2D, this.pedido.cliente().endereco().bairro(), 10);
+        if (StringUtils.isNotEmpty(this.pedido.cliente().endereco().bairro())) {
+            escreveLinha(graphics2D, "Bairro: ", 0);
+            escreveLinhaDireita(graphics2D, this.pedido.cliente().endereco().bairro(), 10);
+        }
 
         if (StringUtils.isNotEmpty(this.pedido.cliente().endereco().complemento())) {
             escreveLinha(graphics2D, "Complemento: ", 0);
@@ -144,13 +146,13 @@ public class ImpressaoPedido implements Printable {
     }
 
     private void escreveLinha(Graphics2D graphics2D, String conteudo, Integer distanciaProximaLinha) {
-        graphics2D.drawString(conteudo, 0, this.cordenadaY);
+        escreve(graphics2D, conteudo, 0);
 
         this.cordenadaY += distanciaProximaLinha;
     }
 
     private void escreveLinha(Graphics2D graphics2D, String conteudo, Integer distanciaProximaLinha, Integer posicaoX) {
-        graphics2D.drawString(conteudo, posicaoX, this.cordenadaY);
+        escreve(graphics2D, conteudo, posicaoX);
 
         this.cordenadaY += distanciaProximaLinha;
     }
@@ -158,7 +160,7 @@ public class ImpressaoPedido implements Printable {
     private void escreveLinhaCentralizada(Graphics2D graphics2D, String conteudo, Integer distanciaProximaLinha) {
         int x = 100 - (this.fontMetrics.stringWidth(conteudo) / 2);
 
-        graphics2D.drawString(conteudo, x, this.cordenadaY);
+        escreve(graphics2D, conteudo, x);
 
         this.cordenadaY += distanciaProximaLinha;
     }
@@ -166,9 +168,17 @@ public class ImpressaoPedido implements Printable {
     private void escreveLinhaDireita(Graphics2D graphics2D, String conteudo, Integer distanciaProximaLinha) {
         int x = 200 - this.fontMetrics.stringWidth(conteudo);
 
-        graphics2D.drawString(conteudo, x, this.cordenadaY);
+        escreve(graphics2D, conteudo, x);
 
         this.cordenadaY += distanciaProximaLinha;
+    }
+
+    private void escreve(Graphics2D graphics2D, String conteudo, int x) {
+        if (conteudo == null) {
+            return;
+        }
+
+        graphics2D.drawString(conteudo, x, this.cordenadaY);
     }
 
     private void setFont(Graphics2D graphics2D, Integer tamanho) {
