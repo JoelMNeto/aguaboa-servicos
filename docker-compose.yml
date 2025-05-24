@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: aguaboa-database
+    volumes:
+      - data:/var/lib/postgresql/db
+    networks:
+      - aguaboa-net
+    environment:
+      POSTGRES_DB: aguaboa
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - '5432:5432'
+
+volumes:
+  data:
+    external: false
+networks:
+  aguaboa-net:
+    driver: bridge
